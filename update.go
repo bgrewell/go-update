@@ -169,7 +169,7 @@ func (a *Asset) downloadProxySecure(proxy Proxy, token *string) (string, error) 
 
 	log.Debugf("fetch %q", a.URL)
 
-	var tc *http.Client
+	var tc = &http.Client{}
 	if token != nil {
 		ctx := context.Background()
 		ts := oauth2.StaticTokenSource(
