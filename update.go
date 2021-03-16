@@ -171,13 +171,15 @@ func (a *Asset) downloadProxySecure(proxy Proxy, token *string) (string, error) 
 
 	var tc = &http.Client{}
 	if token != nil {
+		t := *token
 		ctx := context.Background()
 		ts := oauth2.StaticTokenSource(
 			&oauth2.Token{
-				AccessToken: *token,
+				AccessToken: t,
 			},
 		)
 		tc = oauth2.NewClient(ctx, ts)
+		a.URL = a.URL[:strings.Index(a.URL, "://")+3] + t + a.URL[strings.Index(a.URL, "://")+3:]
 	}
 
 	res, err := tc.Get(a.URL)
