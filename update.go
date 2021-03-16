@@ -32,7 +32,7 @@ var NopProxy = func(size int, r io.ReadCloser) io.ReadCloser {
 
 // Manager is the update manager.
 type Manager struct {
-	Store          // Store for releases such as Github or a custom private store.
+	Store   Store  // Store for releases such as Github or a custom private store.
 	Command string // Command is the executable's name.
 }
 
