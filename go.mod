@@ -15,7 +15,6 @@ require (
 	github.com/klauspost/pgzip v1.2.5 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/tj/go v1.8.7
-	github.com/tj/go-update v2.2.4+incompatible
 	github.com/ulikunitz/xz v0.5.10 // indirect
 	golang.org/x/oauth2 v0.0.0-20210313182246-cd4f82c27b84
 )
