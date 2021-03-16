@@ -3,7 +3,9 @@
 package update
 
 import (
+	"context"
 	"fmt"
+	"golang.org/x/oauth2"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -167,7 +169,18 @@ func (a *Asset) downloadProxySecure(proxy Proxy, token *string) (string, error) 
 
 	log.Debugf("fetch %q", a.URL)
 
-	res, err := http.Get(a.URL)
+	var tc *http.Client
+	if token != nil {
+		ctx := context.Background()
+		ts := oauth2.StaticTokenSource(
+			&oauth2.Token{
+				AccessToken: *token,
+			},
+		)
+		tc = oauth2.NewClient(ctx, ts)
+	}
+
+	res, err := tc.Get(a.URL)
 	if err != nil {
 		return "", errors.Wrap(err, "fetching asset")
 	}
