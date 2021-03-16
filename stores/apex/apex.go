@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/tj/go-update"
+	"github.com/BGrewell/go-update"
 	"github.com/tj/go/http/request"
 )
 
