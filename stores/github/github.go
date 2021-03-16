@@ -3,10 +3,11 @@ package github
 
 import (
 	"context"
-	"time"
-
+	"github.com/BGrewell/go-update"
 	"github.com/google/go-github/github"
-	"github.com/tj/go-update"
+	"golang.org/x/oauth2"
+	"net/http"
+	"time"
 )
 
 // Store is the store implementation.
@@ -14,6 +15,7 @@ type Store struct {
 	Owner   string
 	Repo    string
 	Version string
+	Token   *string
 }
 
 // GetRelease returns the specified release or ErrNotFound.
@@ -21,7 +23,17 @@ func (s *Store) GetRelease(version string) (*update.Release, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	gh := github.NewClient(nil)
+	var tc *http.Client
+	if s.Token != nil {
+		ts := oauth2.StaticTokenSource(
+			&oauth2.Token{
+				AccessToken: *s.Token,
+			},
+		)
+		tc = oauth2.NewClient(ctx, ts)
+	}
+
+	gh := github.NewClient(tc)
 
 	r, res, err := gh.Repositories.GetReleaseByTag(ctx, s.Owner, s.Repo, "v"+version)
 
@@ -41,7 +53,17 @@ func (s *Store) LatestReleases() (latest []*update.Release, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	gh := github.NewClient(nil)
+	var tc *http.Client
+	if s.Token != nil {
+		ts := oauth2.StaticTokenSource(
+			&oauth2.Token{
+				AccessToken: *s.Token,
+			},
+		)
+		tc = oauth2.NewClient(ctx, ts)
+	}
+
+	gh := github.NewClient(tc)
 
 	releases, _, err := gh.Repositories.ListReleases(ctx, s.Owner, s.Repo, nil)
 	if err != nil {
