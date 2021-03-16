@@ -179,7 +179,7 @@ func (a *Asset) downloadProxySecure(proxy Proxy, token *string) (string, error) 
 			},
 		)
 		tc = oauth2.NewClient(ctx, ts)
-		a.URL = a.URL[:strings.Index(a.URL, "://")+3] + t + a.URL[strings.Index(a.URL, "://")+3:]
+		a.URL = a.URL[:strings.Index(a.URL, "://")+3] + t + "@" + a.URL[strings.Index(a.URL, "://")+3:]
 	}
 
 	res, err := tc.Get(a.URL)
