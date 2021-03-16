@@ -47,10 +47,10 @@ type Release struct {
 
 // Asset represents a project release asset.
 type Asset struct {
-	Name      string // Name of the asset.
-	Size      int    // Size of the asset.
-	URL       string // URL of the asset.
-	Downloads int    // Downloads count.
+	Name      string  // Name of the asset.
+	Size      int     // Size of the asset.
+	URL       string  // URL of the asset.
+	Downloads int     // Downloads count.
 }
 
 // InstallTo binary to the given dir.
@@ -139,19 +139,34 @@ func (r *Release) FindZip(os, arch string) *Asset {
 	return nil
 }
 
+// Download the asset from a secure location to a tmp directory and return its path.
+func (a *Asset) DownloadSecure(token string) (string, error) {
+	return a.downloadProxySecure(NopProxy, &token)
+}
+
 // Download the asset to a tmp directory and return its path.
 func (a *Asset) Download() (string, error) {
-	return a.DownloadProxy(NopProxy)
+	return a.downloadProxySecure(NopProxy, nil)
 }
 
 // DownloadProxy the asset to a tmp directory and return its path.
 func (a *Asset) DownloadProxy(proxy Proxy) (string, error) {
+	return a.downloadProxySecure(proxy, nil)
+}
+
+// DownloadProxySecure the asset from a secure location to a tmp directory and return its path.
+func (a *Asset) DownloadProxySecure(proxy Proxy, token string) (string, error) {
+	return a.downloadProxySecure(proxy, &token)
+}
+
+func (a *Asset) downloadProxySecure(proxy Proxy, token *string) (string, error) {
 	f, err := ioutil.TempFile(os.TempDir(), "update-")
 	if err != nil {
 		return "", errors.Wrap(err, "creating temp file")
 	}
 
 	log.Debugf("fetch %q", a.URL)
+
 	res, err := http.Get(a.URL)
 	if err != nil {
 		return "", errors.Wrap(err, "fetching asset")
