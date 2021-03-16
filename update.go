@@ -115,10 +115,10 @@ func (m *Manager) Install(path string) error {
 
 // FindTarball returns a tarball matching os and arch, or nil.
 func (r *Release) FindTarball(os, arch string) *Asset {
-	s := fmt.Sprintf("%s_%s", os, arch)
+	s := strings.ToLower(fmt.Sprintf("%s_%s", os, arch))
 	for _, a := range r.Assets {
 		ext := filepath.Ext(a.Name)
-		if strings.Contains(a.Name, s) && ext == ".gz" {
+		if strings.Contains(strings.ToLower(a.Name), s) && ext == ".gz" {
 			return a
 		}
 	}
@@ -128,10 +128,10 @@ func (r *Release) FindTarball(os, arch string) *Asset {
 
 // FindZip returns a zipfile matching os and arch, or nil.
 func (r *Release) FindZip(os, arch string) *Asset {
-	s := fmt.Sprintf("%s_%s", os, arch)
+	s := strings.ToLower(fmt.Sprintf("%s_%s", os, arch))
 	for _, a := range r.Assets {
 		ext := filepath.Ext(a.Name)
-		if strings.Contains(a.Name, s) && ext == ".zip" {
+		if strings.Contains(strings.ToLower(a.Name), s) && ext == ".zip" {
 			return a
 		}
 	}
