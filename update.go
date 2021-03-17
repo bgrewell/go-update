@@ -74,13 +74,14 @@ func (m *Manager) InstallTo(path, dir string) error {
 		return errors.Wrap(err, "closing tarball")
 	}
 
-	bin := filepath.Join(tmpdir, m.Command)
+	cmd := filepath.Base(m.Command)
+	bin := filepath.Join(tmpdir, cmd)
 
 	if err := os.Chmod(bin, 0755); err != nil {
 		return errors.Wrap(err, "chmod")
 	}
 
-	dst := filepath.Join(dir, m.Command)
+	dst := filepath.Join(dir, cmd)
 	tmp := dst + ".tmp"
 
 	log.Debugf("copy %q to %q", bin, tmp)
