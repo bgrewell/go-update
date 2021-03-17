@@ -96,7 +96,7 @@ func githubRelease(r *github.RepositoryRelease) *update.Release {
 		out.Assets = append(out.Assets, &update.Asset{
 			Name:      a.GetName(),
 			Size:      a.GetSize(),
-			URL:       a.GetBrowserDownloadURL(),
+			URL:       a.GetURL(),
 			Downloads: a.GetDownloadCount(),
 		})
 	}
