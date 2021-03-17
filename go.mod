@@ -4,22 +4,16 @@ go 1.15
 
 require (
 	github.com/apex/log v1.9.0
-	github.com/bradfitz/iter v0.0.0-20191230175014-e8f45d346db8 // indirect
 	github.com/c4milo/unpackit v0.1.0
-	github.com/dsnet/compress v0.0.1 // indirect
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/google/go-github v17.0.0+incompatible
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/gosuri/uilive v0.0.4 // indirect
 	github.com/gosuri/uiprogress v0.0.1
-	github.com/hooklift/assert v0.1.0 // indirect
-	github.com/kierdavis/ansi v0.0.0-20180105022324-90d93b0fcae2
 	github.com/klauspost/compress v1.11.12 // indirect
-	github.com/klauspost/cpuid v1.3.1 // indirect
-	github.com/klauspost/pgzip v1.2.5 // indirect
+	github.com/mcuadros/go-version v0.0.0-20190830083331-035f6764e8d2
 	github.com/pkg/errors v0.9.1
 	github.com/tj/go v1.8.7
-	github.com/ulikunitz/xz v0.5.10 // indirect
 	golang.org/x/net v0.0.0-20210316092652-d523dce5a7f4 // indirect
 	golang.org/x/oauth2 v0.0.0-20210313182246-cd4f82c27b84
 	google.golang.org/appengine v1.6.7 // indirect

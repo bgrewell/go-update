@@ -19,6 +19,7 @@ import (
 
 	"github.com/apex/log"
 	"github.com/c4milo/unpackit"
+	"github.com/mcuadros/go-version"
 	"github.com/pkg/errors"
 )
 
@@ -49,10 +50,10 @@ type Release struct {
 
 // Asset represents a project release asset.
 type Asset struct {
-	Name      string  // Name of the asset.
-	Size      int     // Size of the asset.
-	URL       string  // URL of the asset.
-	Downloads int     // Downloads count.
+	Name      string // Name of the asset.
+	Size      int    // Size of the asset.
+	URL       string // URL of the asset.
+	Downloads int    // Downloads count.
 }
 
 // InstallTo binary to the given dir.
@@ -114,6 +115,10 @@ func (m *Manager) Install(path string) error {
 
 	dir := filepath.Dir(bin)
 	return m.InstallTo(path, dir)
+}
+
+func (r *Release) Newer(currentVersion string) bool {
+	return version.Compare(r.Version, currentVersion, ">")
 }
 
 // FindTarball returns a tarball matching os and arch, or nil.
