@@ -183,7 +183,9 @@ func (a *Asset) downloadProxySecure(proxy Proxy, token *string) (string, error) 
 
 	}
 
-	res, err := tc.Get(a.URL)
+	req, _ := http.NewRequest("GET", a.URL, nil)
+	req.Header.Set("Accept", "application/octet-stream")
+	res, err := tc.Do(req)
 	if err != nil {
 		return "", errors.Wrap(err, "fetching asset")
 	}
